@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dom-Exercises</title>
+
+  <style>
+    /* CSS styles for the page */
+    body {
+      font-family: Arial;
+    }
+
+    .sub-Button{
+      /* Subscribe button styles */
+      border: none;
+      background-color: black;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 30px;
+    } 
+
+    .is-subscribed{
+      /* Additional styles when subscribed */
+      background-color: rgb(240, 240, 240);
+      color: black;
+    }
+
+    .calculator-Input{
+      /* Styles for the input in the shipping calculator */
+      font-size: 15px;
+      padding: 10px;
+    }
+
+    .calculator-Button{
+      /* Styles for the calculate button in the shipping calculator */
+      font-size: 15px;
+      background-color: green;
+      border: none;
+      padding: 12px 15px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- YouTube Subscribe Button Section -->
+  <p>YouTube Subscribe Button</p>
+  <button class="sub-Button" onclick="change()">Subscribe</button>
+  
+  <!-- Amazon Shipping Calculator Section -->
+  <p>Amazon Shipping Calculator</p> 
+  <p>Orders under $40 = +$10 shipping.</p>
+  <p>Orders over $40 = FREE shipping.</p>
+  <input placeholder="Cost of order" placeholder="number" class="calculator-Input" >
+  <button class="calculator-Button" onclick="calculate(document.querySelector('.calculator-Input').value)">Calculate</button>
+  <p class="show-Result"> </p>
+
+  <br>
+
+  <!-- Rock Paper Scissors Section -->
+  <p>Rock Paper Scissors</p>
+  <a href="RockPaperScissors.html">Click here</a>
+
+  <script>
+    // JavaScript code for YouTube Subscribe Button and Amazon Shipping Calculator
+
+    // Function to toggle subscription status
+    function change(){
+      const buttonElement = document.querySelector('.sub-Button');
+      if (buttonElement.innerText === 'Subscribe'){
+        buttonElement.innerHTML = 'Subscribed'
+        buttonElement.classList.add('is-subscribed')
+      }else{
+        buttonElement.innerHTML = 'Subscribe'
+        buttonElement.classList.remove('is-subscribed')
+      }
+    }
+
+    let result = 0;
+
+    // Function to calculate shipping cost
+    function calculate(number){
+
+      // Parse input as an integer
+      number = parseInt(number);
+
+      // Determine shipping cost based on order value
+      if (number < 40){
+        result = number + 10;
+      }else{
+        result = number;
+      }
+
+      // Display the result
+      document.querySelector('.show-Result').innerText = `$${result}`
+    }
+  </script>
+
+</body>
+</html>

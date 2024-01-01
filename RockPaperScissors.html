@@ -1,0 +1,149 @@
+<!-- Separate HTML document for Rock Paper Scissors -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rock Paper Scissors</title>
+    <style>
+      /* CSS styles for Rock Paper Scissors game */
+      body{
+        background-color: rgb(25, 25, 25);
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .title{
+        /* Styles for the game title */
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      .selec{
+        /* Styles for the Rock, Paper, Scissors buttons */
+        border: 3px solid white;
+        background-color: transparent;
+        width: 120px;
+        height: 120px;
+        border-radius: 100px;
+        margin-right: 10px;
+      }
+
+      .selec-Icon{
+        /* Styles for the icon inside the buttons */
+        height: 50px
+      }
+
+      .result{
+        /* Styles for displaying game results */
+        margin-top: 50px;
+        font-weight: bold;
+        font-size:25px;
+      }
+
+      .icon{
+        /* Styles for the player and computer move icons */
+        height: 50px;
+      }
+
+      .points{
+        /* Styles for displaying game points */
+        margin-top: 50px;
+      }
+      
+      .resetScore{
+        /* Styles for the reset score button */
+        font-size: 15px;
+        padding: 10px 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Rock Paper Scissors Game Section -->
+    <p class="title">Rock Paper Scissors</p>
+
+    <!-- Buttons for Rock, Paper, Scissors -->
+    <button class="selec" onclick="desition = 0; vs()">
+      <img src="Rock Paper Scissors_files/rock-emoji.png" alt="Rock" class="selec-Icon">
+    </button>
+    <button class="selec" onclick="desition = 1; vs()">
+      <img src="Rock Paper Scissors_files/paper-emoji.png" alt="Paper" class="selec-Icon">
+    </button>
+    <button class="selec" onclick="desition = 2; vs()">
+      <img src="Rock Paper Scissors_files/scissors-emoji.png" alt="Scissors" class="selec-Icon">
+    </button>
+
+    <!-- Display game result -->
+    <p class="result"></p>
+
+    <div class="move-Show" style="display:none;">
+      You
+      <img src="" alt="" id="move-Icon" class="icon">    
+      <img src="" alt="" id="move-IconC" class="icon">
+      Computer
+    </div>
+
+    <!-- Display game points -->
+    <p class="points"></p>
+
+    <!-- Button to reset game score -->
+    <button class="resetScore" onclick="resetScore()">Reset Score</button>
+    
+    <script>
+      // JavaScript code for Rock Paper Scissors game
+
+      // Retrieve scores from local storage or set default values
+      let score = JSON.parse(localStorage.getItem('score')) || {
+        wins: 0,
+        losses: 0,
+        draws: 0
+      };
+      
+      // Function to reset game score
+      function resetScore(){
+        score.wins = 0;
+        score.losses = 0;
+        score.draws = 0;
+        localStorage.removeItem('score');
+        document.querySelector('.points').innerText = `wins: ${score.wins} draws: ${score.draws} losses: ${score.losses}`
+      }
+
+      // Display current game score
+      document.querySelector('.points').innerText = `wins: ${score.wins} draws: ${score.draws} losses: ${score.losses}`
+
+      let desition;
+      let compDesition;
+      let options = ['Rock Paper Scissors_files/rock-emoji.png', 'Rock Paper Scissors_files/paper-emoji.png', 'Rock Paper Scissors_files/scissors-emoji.png']
+      let result;
+
+      // Function to simulate a round of Rock Paper Scissors
+      function vs(){
+        compDesition = Math.round(Math.random() * 2)
+
+        if(desition == compDesition){
+          result = 'draw'
+          score.draws++
+        }else if(desition == compDesition + 1 || desition + 2 == compDesition){
+          result = 'You win'
+          score.wins++
+        }else{
+          result = 'You lose'
+          score.losses++
+        };
+
+        // Display game result
+        document.querySelector('.result').innerText = `${result}`;
+
+        // Display chosen moves
+        document.querySelector('.move-Show').style.display = "block"
+        document.getElementById('move-Icon').src = options[desition];
+        document.getElementById('move-IconC').src = options[compDesition];
+
+        // Display updated game points
+        document.querySelector('.points').innerText = `wins: ${score.wins} draws: ${score.draws} losses: ${score.losses}`
+
+        // Store scores in local storage
+        localStorage.setItem('score',JSON.stringify(score));
+      };
+    </script>
+  </body>
+</html>
